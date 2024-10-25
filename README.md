@@ -179,7 +179,9 @@ HAVING SUM(salary) > 100000;
 
 *-- Write a query to classify employees as 'Senior' if their age is 40 or above, and 'Junior' if their age is below 40.*
 
-SELECT *, IF (age >= 40, "Senior", "Junior") AS "CLASSIFICATION" FROM employee_demographics;
+SELECT *, 
+
+IF (age >= 40, "Senior", "Junior") AS "CLASSIFICATION" FROM employee_demographics;
 
 *-- ALTERNATIVELY*
 
@@ -197,7 +199,9 @@ AS "CLASSIFICATION" FROM employee_demographics;
 
 
 **18. SQL DISTINCT**
+
 *-- Write a query to display distinct occupations from the `employee_salary` table.*
+
 SELECT DISTINCT occupation FROM employee_salary;
 
 
@@ -206,70 +210,112 @@ SELECT DISTINCT occupation FROM employee_salary;
 
 
 **19. SQL Joins** 
+
 *-- Write a query to display the first name, last name, and department name of employees by joining `employee_salary` and `parks_departments`.*
+
 SELECT first_name, last_name, department_name
+
 FROM employee_demographics
+
 JOIN parks_departments
+
 ON employee_demographics.employee_id = parks_departments.department_id;
 
 
 **20. SQL INNER JOIN**  
+
 *-- Write a query to display employees who are in departments (non-NULL department IDs) and their department names.*
+
 SELECT employee_id, first_name, last_name, age, gender, birth_date, department_name
+
 FROM employee_demographics
+
 INNER JOIN parks_departments
+
 ON employee_demographics.employee_id = parks_departments.department_id;
 
 
 **21. SQL Outer Joins (LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN)**
+
 *-- Write a query to display all employees and their department names, showing NULL where the employee does not belong to a department (LEFT JOIN).*
+
 SELECT employee_id, first_name, last_name, age, gender, birth_date, department_name
+
 FROM employee_demographics
+
 LEFT JOIN parks_departments
+
 ON employee_demographics.employee_id = parks_departments.department_id;
     
 *--Write a query to display all departments and their employees, showing NULL where no employee is assigned to a department (RIGHT JOIN).*
+
 SELECT department_id, department_name, employee_id, first_name, last_name, age, gender, birth_date
+
 FROM parks_departments
+
 RIGHT JOIN employee_demographics
+
 ON parks_departments.department_id = employee_demographics.employee_id;
 
 
 *-- Write a query to display all employees and departments, whether or not they are related (FULL OUTER JOIN).*
+
 SELECT employee_id, first_name, last_name, age, gender, birth_date, department_id, department_name
+
 FROM employee_demographics
+
 LEFT JOIN parks_departments
+
 ON employee_demographics.employee_id = parks_departments.department_id;
 
 **22. SQL Joins Using WHERE or ON**
+
 *-- Write a query to display employees and their department names using the WHERE clause for the join condition.*
+
 SELECT first_name, last_name, department_name
+
 FROM employee_demographics
+
 JOIN parks_departments
+
 WHERE employee_demographics.employee_id = parks_departments.department_id;
 
 **23. SQL FULL OUTER JOIN**
+
 *-- Write a query to retrieve all employees and departments with an outer join, ensuring all unmatched rows from both tables are included.*
+
 SELECT first_name, last_name, department_name
+
 FROM employee_demographics
+
 LEFT JOIN parks_departments
+
 ON employee_demographics.employee_id = parks_departments.department_id;
 
 
 ### Advanced Level
 
 **24. SQL SUB QUERY**
+
 *-- Without Using Sub Query to return the result set of employees using their id from the employee demographics, employee salary table that belongs to department 1*
+
 SELECT dem.employee_id, dem.first_name, dem.last_name, dem.age, dem.gender, dem.birth_date, sal.dept_id
+
 FROM employee_demographics dem
+
 LEFT JOIN employee_salary sal
+
 ON dem.employee_id = sal.employee_id
+
 WHERE dept_id = 1;
 
 **25. NOW USING SUBQUERIES to achieve 24.**
+
 SELECT * FROM employee_demographics
+
 WHERE employee_id IN (
-	SELECT employee_id 
+	
+ 	SELECT employee_id 
     FROM employee_salary 
     WHERE dept_id = 1
     );
